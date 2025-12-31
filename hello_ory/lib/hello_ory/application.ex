@@ -7,6 +7,7 @@ defmodule HelloOry.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {HelloOry.AuthClients.Keycloak.Token.Strategy, time_interval: 2_000},
       {Plug.Cowboy, scheme: :http, plug: HelloOry.Router, options: [port: get_server_port()]}
     ]
 
@@ -17,12 +18,13 @@ defmodule HelloOry.Application do
     Supervisor.start_link(children, opts)
   end
 
-  defp get_server_port, do: HelloOry.fetch_config!(:server, :port)
+  defp get_server_port, do: HelloOry.fetch_config!(:elixir_server, :port)
 
   defp log_diagnostic_info do
+    Logger.debug("Configured auth client: #{inspect(HelloOry.fetch_config!(:auth_client))}")
     Logger.debug("HTTP server listening on port #{get_server_port()}...")
 
-    for context <- [:client, :server],
+    for context <- [:elixir_client, :elixir_server],
         key <- [:oauth_client_id, :oauth_client_secret] do
       if Application.get_env(:hello_ory, context) |> get_in([key]) == nil do
         Logger.warning("""

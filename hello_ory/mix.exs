@@ -23,7 +23,11 @@ defmodule HelloOry.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.7"},
-      {:req, "~> 0.5.16"}
+      {:req, "~> 0.5.16"},
+      {:joken, "~> 2.6"},
+      {:joken_jwks, "~> 1.7"},
+      # TEMP: Hackney currently needed for Joken
+      {:hackney, "~> 1.25"}
     ]
   end
 end
