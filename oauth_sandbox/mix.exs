@@ -1,9 +1,9 @@
-defmodule HelloOry.MixProject do
+defmodule OauthSandbox.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :hello_ory,
+      app: :oauth_sandbox,
       version: "0.1.0",
       elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule HelloOry.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {HelloOry.Application, []}
+      mod: {OauthSandbox.Application, []}
     ]
   end
 
@@ -23,7 +23,11 @@ defmodule HelloOry.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.7"},
-      {:req, "~> 0.5.16"}
+      {:req, "~> 0.5.16"},
+      {:joken, "~> 2.6"},
+      {:joken_jwks, "~> 1.7"},
+      # TEMP: Hackney currently needed for Joken
+      {:hackney, "~> 1.25"}
     ]
   end
 end
