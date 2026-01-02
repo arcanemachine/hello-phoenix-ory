@@ -1,10 +1,10 @@
-defmodule HelloOry.AuthClients.Keycloak do
-  @moduledoc "The `HelloOry.AuthClient` implementation for Keycloak."
+defmodule OauthSandbox.AuthClients.Keycloak do
+  @moduledoc "The `OauthSandbox.AuthClient` implementation for Keycloak."
 
-  @behaviour HelloOry.AuthClient
+  @behaviour OauthSandbox.AuthClient
 
-  alias HelloOry.Constants, as: C
-  alias HelloOry.AuthClients.Keycloak.Token
+  alias OauthSandbox.Constants, as: C
+  alias OauthSandbox.AuthClients.Keycloak.Token
 
   require Logger
 
@@ -13,11 +13,11 @@ defmodule HelloOry.AuthClients.Keycloak do
 
   ## Examples
 
-      iex> HelloOry.AuthClient.Keycloak.fetch_config!(:base_url)
+      iex> OauthSandbox.AuthClient.Keycloak.fetch_config!(:base_url)
       "http://127.0.0.1:8080"
   """
   def fetch_config!(key),
-    do: Application.fetch_env!(:hello_ory, :keycloak) |> Keyword.fetch!(key)
+    do: Application.fetch_env!(:oauth_sandbox, :keycloak) |> Keyword.fetch!(key)
 
   ## AuthClient
 

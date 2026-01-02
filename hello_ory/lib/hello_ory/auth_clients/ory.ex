@@ -1,6 +1,6 @@
-defmodule HelloOry.AuthClients.Ory do
+defmodule OauthSandbox.AuthClients.Ory do
   @moduledoc """
-  The `HelloOry.AuthClient` implementation for Ory.
+  The `OauthSandbox.AuthClient` implementation for Ory.
 
   ## Using the OAuth client credentials workflow
 
@@ -9,20 +9,20 @@ defmodule HelloOry.AuthClients.Ory do
   `../../../create-client-credentials-grant.sh`):
 
       iex> {:ok, create_client_credentials_grant_response_body} =
-      ...>   HelloOry.AuthClients.SomeClient.create_client_credentials_grant()
+      ...>   OauthSandbox.AuthClients.SomeClient.create_client_credentials_grant()
       {:ok, %{"client_id" => "00000000-0000-0000-0000-000000000000", ...}}
 
   Use this response to fetch an access token:
 
       iex> {:ok, fetch_access_token_response_body} =
-      ...>   HelloOry.AuthClients.SomeClient.fetch_access_token(
+      ...>   OauthSandbox.AuthClients.SomeClient.fetch_access_token(
       ...>     create_client_credentials_grant_response_body
       ...>   )
       {:ok, %{"access_token" => "ory_at_000000...", ...}}
 
   Introspect the access token:
 
-      iex> HelloOry.AuthClients.SomeClient.introspect_access_token(
+      iex> OauthSandbox.AuthClients.SomeClient.introspect_access_token(
       ...>   create_client_credentials_grant_response_body,
       ...>   fetch_access_token_response_body
       ...> )
@@ -30,13 +30,13 @@ defmodule HelloOry.AuthClients.Ory do
 
   Use the access token to arcess the protected URL route:
 
-      iex> HelloOry.send_request_to_protected_endpoint(access_token)
+      iex> OauthSandbox.send_request_to_protected_endpoint(access_token)
       {:ok, %Req.Response{status: 200, body: "Access granted!\n"}}
   """
 
-  @behaviour HelloOry.AuthClient
+  @behaviour OauthSandbox.AuthClient
 
-  alias HelloOry.Constants, as: C
+  alias OauthSandbox.Constants, as: C
   require Logger
 
   @doc """
@@ -44,21 +44,21 @@ defmodule HelloOry.AuthClients.Ory do
 
   ## Examples
 
-      iex> HelloOry.AuthClient.Ory.fetch_config!(:admin_api_base_url)
+      iex> OauthSandbox.AuthClient.Ory.fetch_config!(:admin_api_base_url)
       "http://127.0.0.1:4445"
   """
   def fetch_config!(key),
-    do: Application.fetch_env!(:hello_ory, :ory_hydra) |> Keyword.fetch!(key)
+    do: Application.fetch_env!(:oauth_sandbox, :ory_hydra) |> Keyword.fetch!(key)
 
   ## AuthClient
 
   @impl true
   def access_token_is_valid?(access_token) do
     elixir_server_oauth_client_id =
-      HelloOry.fetch_config!(:elixir_server, :oauth_client_id)
+      OauthSandbox.fetch_config!(:elixir_server, :oauth_client_id)
 
     elixir_server_oauth_client_secret =
-      HelloOry.fetch_config!(:elixir_server, :oauth_client_secret)
+      OauthSandbox.fetch_config!(:elixir_server, :oauth_client_secret)
 
     with {:ok, introspected_access_token} <-
            introspect_access_token(
@@ -195,7 +195,7 @@ defmodule HelloOry.AuthClients.Ory do
   defp introspected_access_token_has_expected_client_id?(
          %{"client_id" => client_id} = _introspected_access_token
        ) do
-    expected_client_id = HelloOry.fetch_config!(:elixir_client, :oauth_client_id)
+    expected_client_id = OauthSandbox.fetch_config!(:elixir_client, :oauth_client_id)
 
     if client_id == expected_client_id do
       Logger.debug("The access token has the expected client ID.")

@@ -1,4 +1,4 @@
-defmodule HelloOry.Constants do
+defmodule OauthSandbox.Constants do
   constants = [
     elixir_server_expected_oauth_audience: "service-b",
     elixir_server_expected_oauth_scope: "service-b:read"

@@ -1,4 +1,4 @@
-defmodule HelloOry.JwtHelpers do
+defmodule OauthSandbox.JwtHelpers do
   @moduledoc "JWT helper functions"
 
   def read_jwt_header(jwt_string), do: JOSE.JWT.peek_protected(jwt_string)

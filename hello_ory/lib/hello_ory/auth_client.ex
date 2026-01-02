@@ -1,9 +1,9 @@
-defmodule HelloOry.AuthClient do
+defmodule OauthSandbox.AuthClient do
   @moduledoc """
   The AuthClient behavior.
 
   This module delegates function calls to the configured auth client (e.g.
-  `HelloOry.AuthClient.Ory`).
+  `OauthSandbox.AuthClient.Ory`).
   """
 
   @doc "Check if an access token is valid."
@@ -18,5 +18,5 @@ defmodule HelloOry.AuthClient do
   def fetch_access_token(client_id, client_secret, opts \\ []),
     do: get_impl().fetch_access_token(client_id, client_secret, opts)
 
-  defp get_impl, do: Application.get_env(:hello_ory, :auth_client, HelloOry.AuthClients.Ory)
+  defp get_impl, do: Application.get_env(:oauth_sandbox, :auth_client, OauthSandbox.AuthClients.Ory)
 end

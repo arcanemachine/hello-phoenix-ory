@@ -1,11 +1,11 @@
-defmodule HelloOry do
+defmodule OauthSandbox do
   @moduledoc """
   This project implements a simple IEx client and HTTP server that manages an OAuth 2.0 "client
   credentials" workflow, allowing for machine-to-machine authentication and authorization.
 
   This module contains high-level helper functions that implement this workflow with the least
-  amount of effort. For lower-level functionality, see the `HelloOry.AuthClient` implementation
-  for the desired provider (e.g. `HelloOry.AuthClients`).
+  amount of effort. For lower-level functionality, see the `OauthSandbox.AuthClient` implementation
+  for the desired provider (e.g. `OauthSandbox.AuthClients`).
 
   ## Examples
 
@@ -22,22 +22,22 @@ defmodule HelloOry do
 
   Access the unprotected route on the Elixir HTTP server (no access token required):
 
-      iex> HelloOry.send_request_to_unprotected_endpoint()
+      iex> OauthSandbox.send_request_to_unprotected_endpoint()
       {:ok, %Req.Response{status: 200, body: "Hello, world!\n"}}
 
   Attempt to access the protected route on the Elixir HTTP server with an invalid token:
 
-      iex> HelloOry.send_request_to_protected_endpoint("invalid-token")
+      iex> OauthSandbox.send_request_to_protected_endpoint("invalid-token")
       {:ok, %Req.Response{status: 401, body: "401 Unauthorized\n"}}
 
   Get an access token via the configured auth server:
 
-      iex> access_token = HelloOry.fetch_access_token_for_elixir_client(HelloOry.AuthClients.Ory)
+      iex> access_token = OauthSandbox.fetch_access_token_for_elixir_client(OauthSandbox.AuthClients.Ory)
       "ory_at_0000000000000000000000000000000000000000000.0000000000000000000000000000000000000000000"
 
   Use the access token to access the protected route on the Elixir HTTP server:
 
-      iex> HelloOry.send_request_to_protected_endpoint(access_token)
+      iex> OauthSandbox.send_request_to_protected_endpoint(access_token)
       {:ok, %Req.Response{status: 200, body: "Access granted!\n"}}
 
   """
@@ -52,7 +52,7 @@ defmodule HelloOry do
 
   ## Examples
 
-      iex> HelloOry.fetch_access_token_for_elixir_client()
+      iex> OauthSandbox.fetch_access_token_for_elixir_client()
       {:ok,
        "ory_at_0000000000000000000000000000000000000000000.0000000000000000000000000000000000000000000"}
   """
@@ -72,7 +72,7 @@ defmodule HelloOry do
     end
   end
 
-  @doc "Make a request to the protected endpoint in `HelloOry.Router` using an `access_token`."
+  @doc "Make a request to the protected endpoint in `OauthSandbox.Router` using an `access_token`."
   @spec send_request_to_protected_endpoint(String.t() | nil) ::
           {:ok, Req.Response.t()} | {:error, any()}
   def send_request_to_protected_endpoint(access_token)
@@ -92,7 +92,7 @@ defmodule HelloOry do
     end)
   end
 
-  @doc "Make a request to the unprotected endpoint in `HelloOry.Router`."
+  @doc "Make a request to the unprotected endpoint in `OauthSandbox.Router`."
   @spec send_request_to_unprotected_endpoint :: :ok | {:error, any()}
   def send_request_to_unprotected_endpoint do
     Req.get("http://127.0.0.1:#{fetch_config!(:elixir_server, :port)}/")
@@ -110,19 +110,19 @@ defmodule HelloOry do
 
   ## Examples
 
-      iex> HelloOry.fetch_config!(:auth_client)
-      HelloOry.AuthClient.Ory
+      iex> OauthSandbox.fetch_config!(:auth_client)
+      OauthSandbox.AuthClient.Ory
   """
-  def fetch_config!(key), do: Application.fetch_env!(:hello_ory, key)
+  def fetch_config!(key), do: Application.fetch_env!(:oauth_sandbox, key)
 
   @doc """
   Fetch a config item for a given `context` and `key`.
 
   ## Examples
 
-      iex> HelloOry.fetch_config!(:elixir_server, :port)
+      iex> OauthSandbox.fetch_config!(:elixir_server, :port)
       8000
   """
   def fetch_config!(context, key),
-    do: Application.fetch_env!(:hello_ory, context) |> Keyword.fetch!(key)
+    do: Application.fetch_env!(:oauth_sandbox, context) |> Keyword.fetch!(key)
 end

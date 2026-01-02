@@ -34,7 +34,7 @@ Client secret: ${client_secret}
 Client audience: ${client_audience}
 Client scope: ${client_scope}
 
-A client ID and secret should be copied into the 'hello_ory' project dotenv file or runtime config.
+A client ID and secret should be copied into the 'oauth_sandbox' project dotenv file or runtime config.
 
 NOTE: Make sure to run this script twice. The OAuth client for the Elixir HTTP server will need one set of credentials, and the OAuth client for the Elixir IEx \"client\" will need another set. See the README for more info.
 "

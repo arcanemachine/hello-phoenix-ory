@@ -1,10 +1,10 @@
-defmodule HelloOry.AuthClients.Keycloak.Token do
+defmodule OauthSandbox.AuthClients.Keycloak.Token do
   use Joken.Config
-  alias HelloOry.Constants, as: C
+  alias OauthSandbox.Constants, as: C
 
   defmodule Strategy do
     use JokenJwks.DefaultStrategyTemplate
-    alias HelloOry.AuthClients.Keycloak
+    alias OauthSandbox.AuthClients.Keycloak
 
     def get_issuer,
       do: "#{Keycloak.fetch_config!(:base_url)}/realms/#{Keycloak.fetch_config!(:realm)}"

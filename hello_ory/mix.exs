@@ -1,9 +1,9 @@
-defmodule HelloOry.MixProject do
+defmodule OauthSandbox.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :hello_ory,
+      app: :oauth_sandbox,
       version: "0.1.0",
       elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule HelloOry.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {HelloOry.Application, []}
+      mod: {OauthSandbox.Application, []}
     ]
   end
 

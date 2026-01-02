@@ -1,4 +1,4 @@
-defmodule HelloOry.Router do
+defmodule OauthSandbox.Router do
   @moduledoc "The main Plug router."
 
   use Plug.Router
@@ -12,7 +12,7 @@ defmodule HelloOry.Router do
   end
 
   get "/protected" do
-    auth_client = HelloOry.fetch_config!(:auth_client)
+    auth_client = OauthSandbox.fetch_config!(:auth_client)
 
     case conn |> get_req_header("authorization") do
       ["Bearer " <> access_token] ->

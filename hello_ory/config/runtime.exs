@@ -1,12 +1,12 @@
 import Config
 
-config :hello_ory, :elixir_server, port: String.to_integer(System.get_env("PORT", "8000"))
+config :oauth_sandbox, :elixir_server, port: String.to_integer(System.get_env("PORT", "8000"))
 
-config :hello_ory, :keycloak,
+config :oauth_sandbox, :keycloak,
   base_url: "http://127.0.0.1:8080",
   realm: "my-realm"
 
-config :hello_ory, :ory_hydra,
+config :oauth_sandbox, :ory_hydra,
   admin_api_base_url: "http://127.0.0.1:4445",
   admin_api_bearer_token: "_______________YOUR_HYDRA_ADMIN_API_BEARER_TOKEN________________",
   public_api_base_url: "http://127.0.0.1:4444"

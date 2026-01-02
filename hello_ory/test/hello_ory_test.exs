@@ -1,8 +1,8 @@
-defmodule HelloOryTest do
+defmodule OauthSandboxTest do
   use ExUnit.Case
-  doctest HelloOry
+  doctest OauthSandbox
 
   test "greets the world" do
-    assert HelloOry.hello() == :world
+    assert OauthSandbox.hello() == :world
   end
 end
